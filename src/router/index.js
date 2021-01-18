@@ -1,9 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import ContactView from '../views/Contact.vue';
 
 Vue.use(VueRouter);
 
-const routes = [];
+const routes = [
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: ContactView
+  }
+];
 
 const router = new VueRouter({
   mode: 'history',
