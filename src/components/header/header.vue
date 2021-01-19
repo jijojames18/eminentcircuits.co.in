@@ -1,32 +1,18 @@
 <template>
-  <header class="site-header clearfix">
-    <b-container>
-      <b-row>
-        <b-col md="12">
-          <div class="pull-left logo">
-            <a href="/">
-              <img src="" alt="" />
-            </a>
-          </div>
-          <div class="main-navigation pull-right">
-            <nav class="main-nav visible-md visible-lg">
-              <ul class="sf-menu">
-                <li :class="{ active: isActivePage('index') }"><a href="/">Home</a></li>
-                <li :class="{ active: isActivePage('about') }"><a href="/about">About Us</a></li>
-                <li :class="{ active: isActivePage('products') }"><a href="/products">Products</a></li>
-                <li :class="{ active: isActivePage('facilities') }"><a href="/facilities">Facilities</a></li>
-                <li :class="{ active: isActivePage('contact') }"><a href="/contact">Contact</a></li>
-              </ul>
-            </nav>
-            <div class="responsive-navigation visible-sm visible-xs">
-              <a href="#nogo" class="menu-toggle-btn">
-                <i class="fa fa-bars"></i>
-              </a>
-            </div>
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
+  <header class="site-header">
+    <b-navbar toggleable="lg" variant="faded" type="light" sticky>
+      <b-navbar-brand href="/"> <img src="" alt=""/></b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item :active="isActivePage('index')" href="/">Home</b-nav-item>
+          <b-nav-item :active="isActivePage('about')" href="/about">About Us</b-nav-item>
+          <b-nav-item :active="isActivePage('products')" href="/products">Products</b-nav-item>
+          <b-nav-item :active="isActivePage('facilities')" href="/facilities">Facilities</b-nav-item>
+          <b-nav-item :active="isActivePage('contact')" href="/contact">Contact</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </header>
 </template>
 <script>
@@ -48,71 +34,37 @@ export default {
 
 <style scoped lang="scss">
 .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 3px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 3px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 3px;
-  z-index: 9999;
-  padding: 35px 0;
-  overflow: visible;
-  transition: padding 0.3s ease-in-out;
-  -moz-transition: padding 0.3s ease-in-out;
-  -webkit-transition: padding 0.3s ease-in-out;
-
-  .pull-left {
-    float: left;
-  }
-
-  .pull-right {
-    float: right;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      float: left;
-      display: block;
-      margin-left: 20px;
-      position: relative;
-
-      &.active {
-        a {
+  margin: 16px;
+  .navbar-collapse {
+    .nav-item {
+      .nav-link {
+        &.active {
           color: #00a8d6;
-          background-color: #f1f4f5;
+          background-color: #ffffff;
         }
-      }
-
-      a {
-        color: #31373a;
-        font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-family: 'Raleway', sans-serif;
-        padding: 5px 15px;
-        display: block;
-        text-decoration: none;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
-        -o-border-radius: 3px;
-        border-radius: 3px;
       }
     }
   }
+  .nav-item {
+    .nav-link {
+      color: #31373a;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: 'Raleway', sans-serif;
+      padding: 5px 15px;
 
-  .menu-toggle-btn {
-    float: right;
-    margin-right: 20px;
-    color: #31373a;
-    font-size: 14px;
-    display: block;
+      &.active {
+        color: #00a8d6;
+        background-color: #f1f4f5;
+      }
+    }
+
+    &:hover {
+      .nav-link {
+        color: #00a8d6;
+      }
+    }
   }
 }
 </style>
