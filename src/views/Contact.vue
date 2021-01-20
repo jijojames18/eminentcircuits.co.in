@@ -7,6 +7,11 @@
           <h3 className="section-title">Get In Touch With Us</h3>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col md="8">
+          <map-component />
+        </b-col>
+      </b-row>
       <b-row class="contact-form-header">
         <b-col md="12">
           <h3 className="section-title">Send a Direct Message</h3>
@@ -57,9 +62,10 @@
 
 <script>
 import headerComponent from '../components/header/header';
+import mapComponent from '../components/map/map';
 import footerComponent from '../components/footer/footer';
 export default {
-  components: { headerComponent, footerComponent }
+  components: { headerComponent, mapComponent, footerComponent }
 };
 </script>
 <style lang="scss" scoped>
