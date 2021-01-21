@@ -54,6 +54,11 @@
             </b-form-group>
           </b-col>
         </b-row>
+        <b-row>
+          <b-col md="4">
+            <vue-recaptcha :sitekey="recaptchaSiteKey" @verify="onCaptchaCheck"></vue-recaptcha>
+          </b-col>
+        </b-row>
       </b-form>
     </b-container>
     <footer-component />
@@ -63,9 +68,18 @@
 <script>
 import headerComponent from '../components/header/header';
 import mapComponent from '../components/map/map';
+import VueRecaptcha from 'vue-recaptcha';
 import footerComponent from '../components/footer/footer';
 export default {
-  components: { headerComponent, mapComponent, footerComponent }
+  components: { headerComponent, mapComponent, VueRecaptcha, footerComponent },
+  props: {
+    recaptchaSiteKey: {
+      type: String
+    }
+  },
+  methods: {
+    onCaptchaCheck(captcha) {}
+  }
 };
 </script>
 <style lang="scss" scoped>

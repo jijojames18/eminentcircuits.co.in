@@ -8,7 +8,10 @@ const routes = [
   {
     path: '/contact',
     name: 'Contact',
-    component: ContactView
+    component: ContactView,
+    props: {
+      recaptchaSiteKey: process.env.VUE_APP_RECAPTCHA_SITE_KEY
+    }
   }
 ];
 
