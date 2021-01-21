@@ -17,7 +17,7 @@
           <h3 class="section-title">Send a Direct Message</h3>
         </b-col>
       </b-row>
-      <b-form class="contact-form" noValidate>
+      <b-form @submit="onSubmit" class="contact-form" noValidate>
         <b-row>
           <b-col md="12">
             <b-alert></b-alert>
@@ -26,13 +26,27 @@
         <b-row>
           <b-col md="4">
             <b-form-group label-for="contact-name" :label-align="'left'" label="Your Name:">
-              <b-form-input :state="nameState" id="contact-name" type="text" name="name" />
+              <b-form-input
+                :state="nameState"
+                @change="inputChanged('name')"
+                v-model="name"
+                id="contact-name"
+                type="text"
+                name="name"
+              />
               <b-form-invalid-feedback id="contact-name-feedback">Please provide a name.</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group label-for="contact-email" :label-align="'left'" label="Email Address:">
-              <b-form-input id="contact-email" :state="emailState" type="email" name="email" />
+              <b-form-input
+                id="contact-email"
+                v-model="email"
+                :state="emailState"
+                @change="inputChanged('email')"
+                type="email"
+                name="email"
+              />
               <b-form-invalid-feedback id="email-feedback">
                 Please provide a valid email address.
               </b-form-invalid-feedback>
@@ -40,7 +54,14 @@
           </b-col>
           <b-col md="4">
             <b-form-group label-for="contact-subject" :label-align="'left'" label="Subject:">
-              <b-form-input :state="subjectState" id="contact-subject" type="text" name="subject" />
+              <b-form-input
+                :state="subjectState"
+                v-model="subject"
+                @change="inputChanged('subject')"
+                id="contact-subject"
+                type="text"
+                name="subject"
+              />
               <b-form-invalid-feedback id="subject-feedback">
                 Please provide a subject.
               </b-form-invalid-feedback>
@@ -50,7 +71,14 @@
         <b-row>
           <b-col md="12">
             <b-form-group label-for="contact-comments" :label-align="'left'" label="Your message">
-              <b-form-textarea :state="commentsState" id="textarea-no-resize" rows="6" no-resize></b-form-textarea>
+              <b-form-textarea
+                :state="commentsState"
+                v-model="comments"
+                @change="inputChanged('comments')"
+                id="textarea-no-resize"
+                rows="6"
+                no-resize
+              ></b-form-textarea>
               <b-form-invalid-feedback id="comments-feedback">
                 Please provide your comments.
               </b-form-invalid-feedback>
@@ -89,6 +117,20 @@ export default {
   },
   data() {
     return {
+      captchaAlertMessage: 'Please prove you are a human. Check the captcha button',
+      successfulAlertMessage: 'Your message has been sent. We will get back to you as soon as possible.',
+      errorInSendingAlertMessage:
+        'An internal error occurred. We are looking into this. In the mean time, please contact stpeterstvm.org directly.',
+      captchaResponse: null,
+      alert: {
+        visible: false,
+        type: 'warning',
+        message: null
+      },
+      name: '',
+      email: '',
+      subject: '',
+      comments: '',
       nameState: null,
       emailState: null,
       subjectState: null,
@@ -96,7 +138,58 @@ export default {
     };
   },
   methods: {
-    onCaptchaCheck(captcha) {}
+    onCaptchaCheck(captcha) {
+      this.captchaResponse = captcha;
+      this.setAlert(false, null, null);
+    },
+    setAlert(visible, type, message) {
+      this.alert = { visible, type, message };
+    },
+    onSubmit(event) {
+      const isValidationSuccessful = this.validateInput();
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    inputChanged(field) {
+      switch (field) {
+        case 'name':
+          this.nameState = null;
+          break;
+        case 'email':
+          this.emailState = null;
+          break;
+        case 'subject':
+          this.subjectState = null;
+          break;
+        case 'comments':
+          this.commentsState = null;
+          break;
+      }
+    },
+    validateInput() {
+      let isValidationSuccessful = true;
+      if (this.name === '') {
+        this.nameState = false;
+        isValidationSuccessful = false;
+      }
+
+      if (this.email === '') {
+        this.emailState = false;
+        isValidationSuccessful = false;
+      }
+
+      if (this.subject === '') {
+        this.subjectState = false;
+        isValidationSuccessful = false;
+      }
+
+      if (this.comments === '') {
+        this.commentsState = false;
+        isValidationSuccessful = false;
+      }
+
+      return isValidationSuccessful;
+    }
   }
 };
 </script>
