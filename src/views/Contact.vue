@@ -1,10 +1,10 @@
 <template>
   <div>
     <header-component :page="'contact'" />
-    <b-container class="contact-form">
+    <b-container class="contact-page">
       <b-row class="justify-content-md-center title-row">
         <b-col md="12">
-          <h3 className="section-title">Get In Touch With Us</h3>
+          <h3 class="section-title">Get In Touch With Us</h3>
         </b-col>
       </b-row>
       <b-row>
@@ -12,9 +12,9 @@
           <map-component />
         </b-col>
       </b-row>
-      <b-row class="contact-form-header">
+      <b-row class="contact-page-header">
         <b-col md="12">
-          <h3 className="section-title">Send a Direct Message</h3>
+          <h3 class="section-title">Send a Direct Message</h3>
         </b-col>
       </b-row>
       <b-form class="contact-form" noValidate>
@@ -25,13 +25,13 @@
         </b-row>
         <b-row>
           <b-col md="4">
-            <b-form-group label-for="contact-name" label="Your Name:">
+            <b-form-group label-for="contact-name" :label-align="'left'" label="Your Name:">
               <b-form-input required id="contact-name" type="text" name="name" />
               <b-form-invalid-feedback id="input-live-feedback">Please provide a name.</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
           <b-col md="4">
-            <b-form-group label-for="contact-email" label="Email Address:">
+            <b-form-group label-for="contact-email" :label-align="'left'" label="Email Address:">
               <b-form-input required id="contact-email" type="email" name="email" />
               <b-form-invalid-feedback id="input-live-feedback">
                 Please provide a valid email address.
@@ -39,7 +39,7 @@
             </b-form-group>
           </b-col>
           <b-col md="4">
-            <b-form-group label-for="contact-subject" label="Subject:">
+            <b-form-group label-for="contact-subject" :label-align="'left'" label="Subject:">
               <b-form-input required id="contact-subject" type="text" name="subject" />
               <b-form-invalid-feedback id="input-live-feedback">
                 Please provide a subject.
@@ -49,7 +49,7 @@
         </b-row>
         <b-row>
           <b-col md="12">
-            <b-form-group label-for="contact-comments" label="Your message:">
+            <b-form-group label-for="contact-comments" :label-align="'left'" label="Your message">
               <b-form-textarea id="textarea-no-resize" rows="6" no-resize></b-form-textarea>
             </b-form-group>
           </b-col>
@@ -57,6 +57,13 @@
         <b-row>
           <b-col md="4">
             <vue-recaptcha :sitekey="recaptchaSiteKey" @verify="onCaptchaCheck"></vue-recaptcha>
+          </b-col>
+        </b-row>
+        <b-row class="submit-button">
+          <b-col md="4">
+            <b-button variant="primary" type="submit">
+              Submit
+            </b-button>
           </b-col>
         </b-row>
       </b-form>
@@ -83,11 +90,40 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.contact {
-  margin-top: 16px;
+.contact-page {
+  margin-top: 14px;
+
+  .section-title {
+    float: left;
+  }
+
   .title-row {
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .contact-page-header {
+    margin-top: 50px;
+    padding-top: 14px;
+    border-top: 1px solid #4f565f;
+  }
+
+  .contact-form {
+    margin-top: 14px;
+
+    .submit-button {
+      margin-top: 14px;
+      margin-bottom: 14px;
+
+      button {
+        float: left;
+      }
+    }
+
+    .btn-primary {
+      background-color: #0054ad;
+      border-color: #0054ad;
+    }
   }
 }
 </style>
