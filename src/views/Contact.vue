@@ -20,6 +20,18 @@
       <b-form @submit="onSubmit" class="contact-form" noValidate>
         <b-row>
           <b-col md="12">
+            <b-alert
+              :show="alert.visible"
+              :variant="alert.type"
+              :dismissible="alert.type === 'info'"
+              @dismissed="setAlert(false, null, null)"
+            >
+              {{ alert.message }}
+            </b-alert>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col md="12">
             <b-alert></b-alert>
           </b-col>
         </b-row>
@@ -168,6 +180,12 @@ export default {
     },
     validateInput() {
       let isValidationSuccessful = true;
+
+      if (!this.captchaResponse) {
+        this.setAlert(true, 'warning', this.captchaAlertMessage);
+        isValidationSuccessful = false;
+      }
+
       if (this.name === '') {
         this.nameState = false;
         isValidationSuccessful = false;
