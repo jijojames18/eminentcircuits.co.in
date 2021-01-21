@@ -17,7 +17,7 @@
           <h3 class="section-title">Send a Direct Message</h3>
         </b-col>
       </b-row>
-      <b-form @submit="onSubmit" class="contact-form" noValidate>
+      <b-form v-on:submit.prevent="onSubmit" class="contact-form">
         <b-row>
           <b-col md="12">
             <b-alert
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import Axios from 'axios';
 import headerComponent from '../components/header/header';
 import mapComponent from '../components/map/map';
 import VueRecaptcha from 'vue-recaptcha';
@@ -125,6 +126,9 @@ export default {
   props: {
     recaptchaSiteKey: {
       type: String
+    },
+    restEndPoint: {
+      type: String
     }
   },
   data() {
@@ -132,7 +136,7 @@ export default {
       captchaAlertMessage: 'Please prove you are a human. Check the captcha button',
       successfulAlertMessage: 'Your message has been sent. We will get back to you as soon as possible.',
       errorInSendingAlertMessage:
-        'An internal error occurred. We are looking into this. In the mean time, please contact stpeterstvm.org directly.',
+        'An internal error occurred. We are looking into this. In the mean time, please contact Eminent Circuits directly.',
       captchaResponse: null,
       alert: {
         visible: false,
@@ -159,8 +163,32 @@ export default {
     },
     onSubmit(event) {
       const isValidationSuccessful = this.validateInput();
-      event.preventDefault();
-      event.stopPropagation();
+      if (isValidationSuccessful) {
+        Axios.post(
+          this.restEndPoint,
+          JSON.stringify({
+            formData: { name: this.name, email: this.email, subject: this.subject, comments: this.comments },
+            captchaResponse: this.captchaResponse,
+            site: 'eminentcircuits.co.in'
+          }),
+          {
+            headers: {
+              'content-type': 'application/json'
+            }
+          }
+        )
+          .then(
+            function() {
+              this.setAlert(true, 'info', this.successfulAlertMessage);
+              this.name = this.email = this.subject = this.comments = '';
+            }.bind(this)
+          )
+          .catch(
+            function() {
+              this.setAlert(true, 'danger', this.errorInSendingAlertMessage);
+            }.bind(this)
+          );
+      }
     },
     inputChanged(field) {
       switch (field) {
