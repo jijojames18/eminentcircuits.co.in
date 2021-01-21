@@ -26,22 +26,22 @@
         <b-row>
           <b-col md="4">
             <b-form-group label-for="contact-name" :label-align="'left'" label="Your Name:">
-              <b-form-input required id="contact-name" type="text" name="name" />
-              <b-form-invalid-feedback id="input-live-feedback">Please provide a name.</b-form-invalid-feedback>
+              <b-form-input :state="nameState" id="contact-name" type="text" name="name" />
+              <b-form-invalid-feedback id="contact-name-feedback">Please provide a name.</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group label-for="contact-email" :label-align="'left'" label="Email Address:">
-              <b-form-input required id="contact-email" type="email" name="email" />
-              <b-form-invalid-feedback id="input-live-feedback">
+              <b-form-input id="contact-email" :state="emailState" type="email" name="email" />
+              <b-form-invalid-feedback id="email-feedback">
                 Please provide a valid email address.
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group label-for="contact-subject" :label-align="'left'" label="Subject:">
-              <b-form-input required id="contact-subject" type="text" name="subject" />
-              <b-form-invalid-feedback id="input-live-feedback">
+              <b-form-input :state="subjectState" id="contact-subject" type="text" name="subject" />
+              <b-form-invalid-feedback id="subject-feedback">
                 Please provide a subject.
               </b-form-invalid-feedback>
             </b-form-group>
@@ -50,7 +50,10 @@
         <b-row>
           <b-col md="12">
             <b-form-group label-for="contact-comments" :label-align="'left'" label="Your message">
-              <b-form-textarea id="textarea-no-resize" rows="6" no-resize></b-form-textarea>
+              <b-form-textarea :state="commentsState" id="textarea-no-resize" rows="6" no-resize></b-form-textarea>
+              <b-form-invalid-feedback id="comments-feedback">
+                Please provide your comments.
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -84,6 +87,14 @@ export default {
       type: String
     }
   },
+  data() {
+    return {
+      nameState: null,
+      emailState: null,
+      subjectState: null,
+      commentsState: null
+    };
+  },
   methods: {
     onCaptchaCheck(captcha) {}
   }
@@ -110,6 +121,10 @@ export default {
 
   .contact-form {
     margin-top: 14px;
+
+    .invalid-feedback {
+      text-align: left;
+    }
 
     .submit-button {
       margin-top: 14px;
